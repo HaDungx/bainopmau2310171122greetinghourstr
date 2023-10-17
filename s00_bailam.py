@@ -54,26 +54,42 @@ import re
 
 
 def greeting(hour_str):
-  if hour_str == '06:00' or hour_str =='0600':
-    return 'Good morning!'
-  if hour_str == '21:00' or hour_str =='2100':
-    return 'Good evening!'
   if hour_str:
     hour_str = hour_str.lower()
-    e = re.findall('am|pm', hour_str)[0]
-    s = re.findall('\d+', hour_str)[0]
-    time = int(s)
-    if len(s) > 2:
-      time /= pow(10, len(s) - 2)
-    if e == 'pm':
-      time += 12
+    l1 = re.findall('\d+', hour_str)
+    l2 = re.findall('am|pm', hour_str)
+    time = []
+    for i in l1:
+      time.append(i)
+   
+    if len(time)==0:
+      return None
+    elif len(time[0]) == 4:
+      time.append(re.sub('\d','',time[0],2))
+      time[0]=re.sub(time[1],'',time[0])
 
-    if (time >= 0 and time <= 12) or time == 24:
+    n_hour = int(time[0])
+    
+    if len(l2)==1:
+      if l2[0]=='pm':
+        if n_hour!=12:
+          n_hour+=12
+      else:
+        if n_hour==12:
+          n_hour==0
+    
+    if len(time) == 2:
+      n_minute = int(time[1])
+      if n_minute==60:
+        n_hour+=1
+    
+    if n_hour>=0 and n_hour<=11:
       return 'Good morning!'
-    elif time >= 14 and time <= 23:
+    elif n_hour>=12 and n_hour<=17:
+      return 'Good afternoon!'
+    else:
       return 'Good evening!'
-
-    return 'Good afternoon!'
   return None
+
 
 #endregion bailam
