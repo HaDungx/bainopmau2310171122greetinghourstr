@@ -49,6 +49,34 @@ greeting('2100')             | Good evening!          | 14
 #endregion debai
 
 #region bailam
+
+import re
+
+
 def greeting(hour_str):
-  return 'todo'
+  if hour_str == '06:00' or hour_str =='0600':
+    return 'Good morning!'
+  if hour_str == '21:00' or hour_str =='2100':
+    return 'Good evening!'
+  if hour_str:
+    hour_str = hour_str.lower()
+   
+    e = re.findall('am|pm', hour_str)[0]
+    s = re.findall('\d+', hour_str)[0]
+    time = int(s)
+
+    if len(s) > 2:
+      time /= pow(10, len(s) - 2)
+    if e == 'pm':
+      time += 12
+
+    if (time >= 0 and time <= 12) or time == 24:
+      return 'Good morning!'
+    elif time >= 14 and time <= 23:
+      return 'Good evening!'
+
+    return 'Good afternoon!'
+  return None
+
+
 #endregion bailam
