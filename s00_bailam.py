@@ -60,11 +60,9 @@ def greeting(hour_str):
     return 'Good evening!'
   if hour_str:
     hour_str = hour_str.lower()
-   
     e = re.findall('am|pm', hour_str)[0]
     s = re.findall('\d+', hour_str)[0]
     time = int(s)
-
     if len(s) > 2:
       time /= pow(10, len(s) - 2)
     if e == 'pm':
@@ -77,6 +75,5 @@ def greeting(hour_str):
 
     return 'Good afternoon!'
   return None
-
 
 #endregion bailam
